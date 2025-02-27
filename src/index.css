@@ -7,12 +7,41 @@ code {
   overflow: auto;
 }
 
+#splashScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #B1FCF3;
+  z-index: 1000;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 2s ease-in-out, transform 1s ease-in-out;
+  transform: scale(1);
+}
+
+#splashScreen.hidden {
+  opacity: 0;
+  transform: scale(10);
+  pointer-events: none;
+}
+
 #pageContainer {
   display: flex;
   width: 100%;
   max-width: 100vw;
   height: 100vh;
   background-color: #001240;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+#pageContainer.visible {
+  opacity: 1;
 }
 
 #blocklyDiv {
@@ -31,7 +60,7 @@ code {
 }
 
 #generatedCode {
-  height: 75%;
+  height: 65%;
   color: #B1FCF3;
   background-color: #001240;
 }
@@ -42,4 +71,11 @@ code {
 
 .blocklyText {
   fill: #001240 !important;
+}
+
+#blorkLogo {
+  width: 100%;
+  /* max-width: 400px; */
+  height: auto;
+  margin-bottom: 1rem;
 }

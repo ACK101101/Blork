@@ -11,6 +11,7 @@ import {javascriptGenerator} from 'blockly/javascript';
 import {toolbox} from './toolbox';
 import './index.css';
 import { json } from 'stream/consumers';
+import blorkLogo from './images/blork_text.png';
 
 // Register the blocks and generator with Blockly
 Blockly.common.defineBlocks(blocks);
@@ -187,6 +188,7 @@ function connectBlocks(
   }
 }
 
+// Setup workspace with a nice default config
 export function initWorkspace(ws: Blockly.WorkspaceSvg) {
   const mainBlock = createBlock(ws, 'main_config');
   mainBlock.setDeletable(false);
@@ -241,6 +243,7 @@ export function initWorkspace(ws: Blockly.WorkspaceSvg) {
   return ws;
 }
 
+// Run workspace code
 if (ws) {
   initWorkspace(ws);
   runCode();
@@ -261,5 +264,35 @@ if (ws) {
       return;
     }
     runCode();
+  });
+}
+
+// Load logo
+const logoImg = document.querySelector('#blorkLogo') as HTMLImageElement;
+if (logoImg) {
+  logoImg.src = blorkLogo;
+}
+
+// Splash screen handling
+const splashScreen = document.getElementById('splashScreen');
+const pageContainer = document.getElementById('pageContainer');
+
+if (splashScreen && pageContainer) {
+  let transitionInProgress = false;
+
+  splashScreen.addEventListener('click', () => {
+    // Prevent multiple clicks during transition
+    if (transitionInProgress) return;
+    transitionInProgress = true;
+
+    splashScreen.classList.add('hidden');
+    pageContainer.classList.add('visible');
+
+    // Wait for transitions to complete
+    setTimeout(() => {
+      // Ensure Blockly workspace renders correctly
+      window.dispatchEvent(new Event('resize'));
+      transitionInProgress = false;
+    }, 500);
   });
 }
