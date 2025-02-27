@@ -40,20 +40,21 @@ const ws = Blockly.inject(blocklyDiv, {
       flyoutBackgroundColour: '#001240',
       flyoutOpacity: 1.0,
     },
-  },
+  }
 });
 
-// This function resets the code and output divs, shows the
-// generated code from the workspace, and evals the code.
+// This function updates the code display with the generated JSON configuration
 const runCode = () => {
   const mainBlock = ws.getBlocksByType('main_config')[0];
   if (!mainBlock) return;
 
+  // Initialize the JavaScript generator before using it
+  javascriptGenerator.init(ws);
+  
   const code = javascriptGenerator.blockToCode(mainBlock);
   
-  // TODO: add custom json validation
   try {
-    // Parse the generated code as JSON to validate it
+    // Validate and format the JSON configuration
     const jsonConfig = JSON.parse(code as string);
     
     // Display formatted JSON
@@ -67,9 +68,9 @@ const runCode = () => {
     }
     
   } catch (e) {
-    console.error('Invalid JSON generated:', e);
+    console.error('Invalid JSON configuration:', e);
     if (codeElement) {
-      codeElement.textContent = 'Error: Invalid JSON generated';
+      codeElement.textContent = 'Error: Invalid JSON configuration';
     }
   }
 };
