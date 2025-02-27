@@ -36,10 +36,10 @@ const ws = Blockly.inject(blocklyDiv, {
   theme: {
     name: 'custom',
     componentStyles: {
-      workspaceBackgroundColour: '#B1FCF3',
-      flyoutBackgroundColour: '#001240',
+      workspaceBackgroundColour: '#001240',
+      flyoutBackgroundColour: '#B1FCF3',
       flyoutOpacity: 1.0,
-    },
+    }
   },
 });
 

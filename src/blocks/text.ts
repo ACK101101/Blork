@@ -32,7 +32,7 @@ const mainConfig = {
       check: 'Transformation'  // Only allow transformation blocks
     }
   ],
-  colour: '#001240',
+  colour: '#B1FCF3',
   tooltip: 'Main configuration container',
 }
 
@@ -54,7 +54,7 @@ const transformation = {
   previousStatement: 'Transformation',
   nextStatement: 'Transformation',
   inputsInline: false,
-  colour: '#ff6533',
+  colour: '#f2a386',
   tooltip: 'Define a transformation\n(use no aggregation when doing arithmetic)'
 }
 
@@ -79,7 +79,7 @@ const aggregation = {
     }
   ],
   output: null,
-  colour: '#6666ff',
+  colour: '#9999f8',
   tooltip: 'Define an aggregation'
 }
 
@@ -109,7 +109,7 @@ const simpleFormula = {
     },
   ],
   output: null,
-  colour: '#6666ff',
+  colour: '#9999f8',
   tooltip: 'Define an simple formula',
   "inputsInline": true
 }
@@ -125,7 +125,7 @@ const constant = {
     }
   ],
   output: null,
-  colour: '#6666ff',
+  colour: '#9999f8',
   tooltip: 'Define a constant',
 }
 
@@ -140,7 +140,7 @@ const value = {
   ],
   previousStatement: 'value',
   nextStatement: 'value',
-  colour: '#ff6533',
+  colour: '#f2a386',
   tooltip: 'Wrap your formulas to list the it as a value',
 }
 
@@ -153,7 +153,7 @@ Blockly.Blocks['variable'] = {
     
     this.setOutput(true, "Source");
     // this.setNextStatement(true, "Source");
-    this.setColour('#6666ff');
+    this.setColour('#9999f8');
     this.setTooltip('Define a variable (e.g. SOURCE_ID)');
   },
 
@@ -206,7 +206,7 @@ Blockly.Blocks['source'] = {
     
     this.setPreviousStatement(true, "Source");
     this.setNextStatement(true, "Source");
-    this.setColour('#ff6533');
+    this.setColour('#f2a386');
     this.setTooltip("Define a data source");
   },
 
