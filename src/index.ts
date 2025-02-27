@@ -10,7 +10,6 @@ import {forBlock} from './generators/javascript';
 import {javascriptGenerator} from 'blockly/javascript';
 import {toolbox} from './toolbox';
 import './index.css';
-import { json } from 'stream/consumers';
 import blorkLogo from './images/blork_text.png';
 
 // Register the blocks and generator with Blockly
