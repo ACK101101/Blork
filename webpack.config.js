@@ -9,7 +9,7 @@ const config = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
-    assetModuleFilename: 'images/[hash][ext][query]'
+    // assetModuleFilename: 'images/[hash][ext][query]'
   },
   // Enable webpack-dev-server to get hot refresh of the app.
   devServer: {

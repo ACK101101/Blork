@@ -37,7 +37,7 @@ code {
   height: 100vh;
   background-color: #001240;
   opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 2s ease-in-out;
 }
 
 #pageContainer.visible {
@@ -75,7 +75,6 @@ code {
 
 #blorkLogo {
   width: 100%;
-  /* max-width: 400px; */
   height: auto;
   margin-bottom: 1rem;
 }
