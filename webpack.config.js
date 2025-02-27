@@ -47,10 +47,10 @@ module.exports = (env, argv) => {
     // so we don't clobber production builds.
     config.output.path = path.resolve(__dirname, 'build');
 
-    // Generate source maps for our code for easier debugging.
-    // Not suitable for production builds. If you want source maps in
-    // production, choose a different one from https://webpack.js.org/configuration/devtool
-    config.devtool = 'eval-cheap-module-source-map';
+    // // Generate source maps for our code for easier debugging.
+    // // Not suitable for production builds. If you want source maps in
+    // // production, choose a different one from https://webpack.js.org/configuration/devtool
+    // config.devtool = 'eval-cheap-module-source-map';
 
     // Include the source maps for Blockly for easier debugging Blockly code.
     config.module.rules.push({
