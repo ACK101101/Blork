@@ -10,6 +10,7 @@ import {forBlock} from './generators/javascript';
 import {javascriptGenerator} from 'blockly/javascript';
 import {toolbox} from './toolbox';
 import './index.css';
+import { json } from 'stream/consumers';
 
 // Register the blocks and generator with Blockly
 Blockly.common.defineBlocks(blocks);
@@ -50,8 +51,9 @@ const runCode = () => {
   if (!mainBlock) return;
 
   const code = javascriptGenerator.blockToCode(mainBlock);
+
+  const validationResults = [];
   
-  // TODO: add custom json validation
   try {
     // Parse the generated code as JSON to validate it
     const jsonConfig = JSON.parse(code as string);
@@ -66,13 +68,78 @@ const runCode = () => {
       outputDiv.innerHTML = '';
     }
     
+    // Extra validation checks
+    if (!checkUniqueIDs(jsonConfig)) {
+      validationResults.push('❌ Duplicate IDs, IDs must be unique');
+    }
+    if (!checkNoEmptyFields(jsonConfig)) {
+      validationResults.push('❌ Empty fields, all fields must be filled');
+    }
+    if (!checkValidAggregation(jsonConfig)) {
+      validationResults.push('❌ Invalid aggregation, aggregation formula must not be empty or be composed of empty elements');
+    }
+    
+    // Add validation results to output div
+    if (outputDiv) {
+      if (validationResults.length === 0) {
+        outputDiv.innerHTML = '<div style="color: #B1FCF3">✓ JSON validation passed</div>';
+      } else {
+        outputDiv.innerHTML = '<div style="color: #B1FCF3">Failed JSON Validation:</div>' +
+          validationResults.map(result => `<div style="color: #B1FCF3">${result}</div>`).join('');
+      }
+    }
+    
   } catch (e) {
     console.error('Invalid JSON generated:', e);
     if (codeElement) {
       codeElement.textContent = 'Error: Invalid JSON generated';
     }
+    if (outputDiv) {
+      outputDiv.innerHTML = `<div style="color: #B1FCF3">Failed JSON Validation: ${e} Invalid JSON format</div>`
+    }
   }
 };
+
+function checkUniqueIDs(jsonConfig: any): boolean {
+  const ids = new Set();
+  jsonConfig.sources.forEach((source: any) => {
+    ids.add(source.id);
+  });
+  jsonConfig.transformations.forEach((transformation: any) => {
+    ids.add(transformation.id);
+  });
+  return ids.size === jsonConfig.sources.length + jsonConfig.transformations.length;
+}
+
+function checkValidAggregation(jsonConfig: any): boolean {
+  return jsonConfig.transformations.every((transformation: any) => {
+    // Check if the formula contains an aggregation function
+    if (transformation.formula.includes('(')) {
+      if (transformation.formula.includes('none')) {
+        return false;
+      }
+      if (transformation.formula.includes('()')) {
+        return false;
+      }
+    }
+    return true;
+  });
+}
+
+// Recursively checks that no field is an empty string
+function checkNoEmptyFields(jsonConfig: any): boolean {
+  if (typeof jsonConfig === 'string') {
+    if (jsonConfig === '') {
+      return false;
+    }
+  }
+
+  if (typeof jsonConfig === 'object' && jsonConfig !== null) {
+    return Object.entries(jsonConfig).every(([_, value]) => checkNoEmptyFields(value));
+  }
+
+  return true;
+}
 
 function createBlock(
   workspace: Blockly.WorkspaceSvg, 
